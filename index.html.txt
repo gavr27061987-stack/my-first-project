@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoChina - Подбор автомобилей в Китае</title>
+    <style>
+        :root {
+            --primary-color: #e60012;
+            --secondary-color: #f8f9fa;
+            --dark-color: #333;
+            --light-color: #fff;
+            --gray-color: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--light-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+            color: var(--primary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .auth-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .login-btn {
+            background-color: transparent;
+            color: var(--dark-color);
+            margin-right: 10px;
+        }
+        
+        .register-btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+        }
+        
+        .auth-buttons button:hover {
+            opacity: 0.9;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--light-color);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .search-box {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-field {
+            flex: 1 1 200px;
+            margin: 10px;
+        }
+        
+        .search-field label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .search-field select, .search-field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-btn {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            border-radius: 4px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 10px;
+            align-self: flex-end;
+        }
+        
+        .search-btn:hover {
+            background-color: #cc0010;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 32px;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            color: var(--gray-color);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        /* Popular Cars Section */
+        .popular-cars {
+            padding: 60px 0;
+        }
+        
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .car-card {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .car-image {
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-color);
+        }
+        
+        .car-info {
+            padding: 20px;
+        }
+        
+        .car-info h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .car-price {
+            color: var(--primary-color);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: var(--gray-color);
+        }
+        
+        .car-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .car-btn:hover {
+            background-color: #cc0010;
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 60px 0;
+            background-color: var(--light-color);
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+        
+        .step {
+            flex: 1 1 200px;
+            text-align: center;
+            padding: 0 15px;
+            margin-bottom: 30px;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 auto 20px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--light-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin: 20px 0;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                margin-top: 10px;
+            }
+            
+            .hero h2 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .search-box {
+                flex-direction: column;
+            }
+            
+            .search-field {
+                margin: 10px 0;
+            }
+            
+            .search-btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🚗</span>
+                    <h1>AutoChina</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">Каталог</a></li>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="login-btn">Войти</button>
+                    <button class="register-btn">Регистрация</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Найдите идеальный автомобиль в Китае</h2>
+            <p>Мы помогаем подобрать и доставить автомобили из Китая с гарантией качества и лучшими ценами</p>
+            <div class="search-box">
+                <div class="search-field">
+                    <label for="brand">Марка</label>
+                    <select id="brand">
+                        <option value="">Любая марка</option>
+                        <option value="geely">Geely</option>
+                        <option value="chery">Chery</option>
+                        <option value="haval">Haval</option>
+                        <option value="byd">BYD</option>
+                        <option value="changan">Changan</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label for="model">Модель</label>
+                    <select id="model">
+                        <option value="">Любая модель</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label for="price">Цена до</label>
+                    <select id="price">
+                        <option value="">Любая цена</option>
+                        <option value="10000">$10,000</option>
+                        <option value="20000">$20,000</option>
+                        <option value="30000">$30,000</option>
+                        <option value="50000">$50,000</option>
+                    </select>
+                </div>
+                <button class="search-btn">Найти автомобиль</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Почему выбирают нас</h2>
+                <p>Мы предлагаем полный спектр услуг по подбору и доставке автомобилей из Китая</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Профессиональный подбор</h3>
+                    <p>Наши эксперты подберут автомобиль согласно вашим требованиям и бюджету</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Гарантия качества</h3>
+                    <p>Тщательная проверка перед покупкой и гарантия на все автомобили</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚢</div>
+                    <h3>Доставка под ключ</h3>
+                    <p>Организуем доставку автомобиля из Китая с полным таможенным оформлением</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Поддержка 24/7</h3>
+                    <p>Наша команда поддержки всегда готова ответить на ваши вопросы</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Cars Section -->
+    <section class="popular-cars">
+        <div class="container">
+            <div class="section-title">
+                <h2>Популярные модели</h2>
+                <p>Самые востребованные автомобили из Китая</p>
+            </div>
+            <div class="cars-grid">
+                <div class="car-card">
+                    <div class="car-image">
+                        [Geely Coolray]
+                    </div>
+                    <div class="car-info">
+                        <h3>Geely Coolray</h3>
+                        <div class="car-price">$18,500</div>
+                        <div class="car-specs">
+                            <span>1.5L Turbo</span>
+                            <span>Автомат</span>
+                            <span>Кроссовер</span>
+                        </div>
+                        <a href="#" class="car-btn">Подробнее</a>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-image">
+                        [Chery Tiggo 8 Pro]
+                    </div>
+                    <div class="car-info">
+                        <h3>Chery Tiggo 8 Pro</h3>
+                        <div class="car-price">$25,200</div>
+                        <div class="car-specs">
+                            <span>2.0L Turbo</span>
+                            <span>Автомат</span>
+                            <span>Внедорожник</span>
+                        </div>
+                        <a href="#" class="car-btn">Подробнее</a>
+                    </div>
+                </div>
+                <div class="car-card">
+                    <div class="car-image">
+                        [BYD Han EV]
+                    </div>
+                    <div class="car-info">
+                        <h3>BYD Han EV</h3>
+                        <div class="car-price">$42,000</div>
+                        <div class="car-specs">
+                            <span>Электромобиль</span>
+                            <span>Автомат</span>
+                            <span>Седан</span>
+                        </div>
+                        <a href="#" class="car-btn">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Как это работает</h2>
+                <p>Процесс подбора и доставки автомобиля из Китая</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Заявка</h3>
+                    <p>Оставьте заявку с вашими требованиями к автомобилю</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Подбор</h3>
+                    <p>Мы подберем для вас подходящие варианты</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Проверка</h3>
+                    <p>Тщательно проверим выбранный автомобиль</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Доставка</h3>
+                    <p>Организуем доставку и таможенное оформление</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AutoChina</h3>
+                    <p>Ваш надежный партнер в подборе и доставке автомобилей из Китая</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Каталог</h3>
+                    <ul>
+                        <li><a href="#">Geely</a></li>
+                        <li><a href="#">Chery</a></li>
+                        <li><a href="#">Haval</a></li>
+                        <li><a href="#">BYD</a></li>
+                        <li><a href="#">Changan</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Отзывы</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li>📞 +86 123 456 7890</li>
+                        <li>✉️ info@autochina.com</li>
+                        <li>📍 Гуанчжоу, Китай</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AutoChina. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Простая логика для демонстрации
+        document.querySelector('.search-btn').addEventListener('click', function() {
+            const brand = document.getElementById('brand').value;
+            const price = document.getElementById('price').value;
+            
+            if (!brand) {
+                alert('Пожалуйста, выберите марку автомобиля');
+                return;
+            }
+            
+            let message = 'Поиск автомобилей ';
+            message += brand ? марки ${brand} : '';
+            message += price ? ` до $${price}` : '';
+            
+            alert(message);
+        });
+        
+        // Обновление списка моделей при выборе марки
+        document.getElementById('brand').addEventListener('change', function() {
+            const brand = this.value;
+            const modelSelect = document.getElementById('model');
+            
+            // Очищаем список моделей
+            modelSelect.innerHTML = '<option value="">Любая модель</option>';
+            
+            if (!brand) return;
+            
+            // Добавляем модели в зависимости от выбранной марки
+            let models = [];
+            
+            switch(brand) {
+                case 'geely':
+                    models = ['Coolray', 'Emgrand', 'Atlas', 'Tugella'];
+                    break;
+                case 'chery':
+                    models = ['Tiggo 8 Pro', 'Arrizo 6', 'Tiggo 7 Pro', 'Tiggo 4'];
+                    break;
+                case 'haval':
+                    models = ['Jolion', 'H6', 'F7', 'Big Dog'];
+                    break;
+                case 'byd':
+                    models = ['Han', 'Tang', 'Song', 'Dolphin'];
+                    break;
+                case 'changan':
+                    models = ['CS75 Plus', 'UNI-K', 'Eado', 'CS35 Plus'];
+                    break;
+            }
+            
+            models.forEach(model => {
+                const option = document.createElement('option');
+                option.value = model.toLowerCase().replace(' ', '-');
+                option.textContent = model;
+                modelSelect.appendChild(option);
+            });
+        });
+    </script>
+</body>
+</html>
